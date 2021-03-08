@@ -6,13 +6,13 @@ services:
           - 8080:8080
       restart: always
       depends_on:
-        - udagram-api-users-svc
-        - udagram-api-feed-svc
-  udagram-api-users-svc:
+        - udagram-api-users
+        - udagram-api-feed
+  udagram-api-users:
     image: mathson/microservice-udagram-api-users
     env_file:
       - env.list
-  udagram-api-feed-svc:
+  udagram-api-feed:
     image: mathson/microservice-udagram-api-feed
     env_file:
       - env.list

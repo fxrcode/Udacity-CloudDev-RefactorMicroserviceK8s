@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders,  HttpErrorResponse, HttpRequest, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpEvent } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
-import { FeedItem } from '../feed/models/feed-item.model';
-import { catchError, tap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 const API_HOST = environment.apiHost;
 
@@ -20,8 +18,13 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
 
-  handleError(error: Error) {
+  static handleError(error: Error) {
     alert(error.message);
+  }
+
+  static extractData(res: HttpEvent<any>) {
+    const body = res;
+    return body || { };
   }
 
   setAuthToken(token) {
@@ -31,12 +34,12 @@ export class ApiService {
 
   get(endpoint): Promise<any> {
     const url = `${API_HOST}${endpoint}`;
-    const req = this.http.get(url, this.httpOptions).pipe(map(this.extractData));
+    const req = this.http.get(url, this.httpOptions).pipe(map(ApiService.extractData));
 
     return req
             .toPromise()
             .catch((e) => {
-              this.handleError(e);
+              ApiService.handleError(e);
               throw e;
             });
   }
@@ -46,7 +49,7 @@ export class ApiService {
     return this.http.post<HttpEvent<any>>(url, data, this.httpOptions)
             .toPromise()
             .catch((e) => {
-              this.handleError(e);
+              ApiService.handleError(e);
               throw e;
             });
   }
@@ -68,11 +71,5 @@ export class ApiService {
         }
       });
     });
-  }
-
-  /// Utilities
-  private extractData(res: HttpEvent<any>) {
-    const body = res;
-    return body || { };
   }
 }

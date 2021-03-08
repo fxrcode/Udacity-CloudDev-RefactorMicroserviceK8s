@@ -1,27 +1,18 @@
-## Use Ionic base image
+## Build
 FROM beevelop/ionic:latest AS ionic
-
-# Create app directory in Docker
-WORKDIR /usr/frontend-ionic
-
-# Install app dependencies by copying
-# package.json and package-lock.json
+# Create app directory
+WORKDIR /usr/src/app
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
 COPY package*.json ./
-
-# Install all dependencies in Docker
 RUN npm ci
-
-# Copy app from local environment into the Docker image
+# Bundle app source
 COPY . .
+RUN ionic build
 
-# Build the app
-RUN ionic build --prod
+## Run 
+FROM nginx:alpine
+#COPY www /usr/share/nginx/html
+COPY --from=ionic  /usr/src/app/www /usr/share/nginx/html
 
-## From a clean nginx base image
-FROM nginx:stable
-
-# Copy the app build contents to Nginx
-COPY --from=ionic  /usr/frontend-ionic/www /usr/share/nginx/html
-
-# Copy the Ngix configuration file to Nginx
-COPY --from=ionic /usr/frontend-ionic/nginx.conf /etc/nginx/nginx.conf

@@ -1,12 +1,12 @@
 import cors from 'cors';
 import express from 'express';
-import {sequelize} from './sequelize';
+import { sequelize } from './sequelize';
 
-import {IndexRouter} from './controllers/v0/index.router';
+import { IndexRouter } from './controllers/v0/index.router';
 
 import bodyParser from 'body-parser';
-import {config} from './config/config';
-import {V0_FEED_MODELS} from './controllers/v0/model.index';
+import { config } from './config/config';
+import { V0_FEED_MODELS } from './controllers/v0/model.index';
 
 const c = config.dev;
 
@@ -32,14 +32,14 @@ const c = config.dev;
   app.use('/api/v0/', IndexRouter);
 
   // Root URI call
-  app.get( '/', async ( req, res ) => {
-    res.send( '/api/v0/' );
-  } );
+  app.get('/', async (req, res) => {
+    res.send('/api/v0/');
+  });
 
 
   // Start the Server
-  app.listen( port, () => {
+  app.listen(port, () => {
     console.log( `feed server running ${c.url}` );
-    console.log( `press CTRL+C to stop server` );
-  } );
+    console.log(`press CTRL+C to stop server`);
+  });
 })();

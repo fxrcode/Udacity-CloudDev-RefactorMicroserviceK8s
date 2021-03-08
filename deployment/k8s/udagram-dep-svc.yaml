@@ -107,7 +107,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-    name: reverse-proxy-srv
+    name: reverse-proxy-svc
     labels:
         app: reverse-proxy
         tier: backend
@@ -156,7 +156,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-    name: frontend-ionic-srv
+    name: frontend-ionic-svc
     labels:
         app: frontend-ionic
         tier: frontend
