@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,7 +17,7 @@ spec:
         service: reverse-proxy
     spec:
       containers:
-      - image: mathson/simple-reverse-proxy
+      - image: mathson/ud-cloudev-prj3-reverse-proxy
         name: reverse-proxy
         imagePullPolicy: Always          
         resources:

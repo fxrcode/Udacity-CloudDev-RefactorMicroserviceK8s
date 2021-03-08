@@ -1,0 +1,14 @@
+version: "3"
+services:
+  reverseproxy:
+    build: ../../reverse-proxy
+    image: mathson/microservice-udagram-nginx
+  backend_user:
+    build: ../../udagram-api-users
+    image: mathson/microservice-udagram-api-users
+  backend_feed:
+    build: ../../udagram-api-feed
+    image: mathson/microservice-udagram-api-feed
+  frontend:
+    build: ../../udagram-frontend
+    image: mathson/microservice-udagram-frontend

@@ -1,0 +1,18 @@
+version: "3"
+services:
+  reverseproxy:
+      image: mathson/microservice-udagram-nginx
+      ports:
+          - 8080:8080
+      restart: always
+      depends_on:
+        - backend-users
+        - backend-feed
+  backend-users:
+    image: mathson/microservice-udagram-api-users
+  backend-feed:
+    image: mathson/microservice-udagram-api-feed
+  frontend:
+    image: mathson/microservice-udagram-frontend
+    ports:
+      - "8100:80"
