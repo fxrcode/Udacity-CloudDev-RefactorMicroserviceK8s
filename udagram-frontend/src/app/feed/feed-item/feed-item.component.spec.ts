@@ -1,14 +1,15 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FeedItemComponent } from './feed-item.component';
 import { feedItemMocks } from '../models/feed-item.model';
+import { FeedProviderService } from '../services/feed.provider.service';
 
 describe('FeedItemComponent', () => {
   let component: FeedItemComponent;
   let fixture: ComponentFixture<FeedItemComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FeedItemComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -39,4 +40,18 @@ describe('FeedItemComponent', () => {
     const paragraphs = app.querySelectorAll('p');
     expect(([].slice.call(paragraphs)).map((x) => x.innerText)).toContain(feedItemMocks[0].caption);
   });
+
+  // it('should open a modal when clicked', () => {
+  //   de = fixture.debugElement.query(By.css('ion-buttons button'));
+  //   de.triggerEventHandler('click', null);
+  //   expect(navCtrl.push).toHaveBeenCalledWith(WishlistPage);
+  // });
+
+  // it('should open a modal when clicked', () => {
+  //   let navCtrl = fixture.debugElement.injector.get(NavController);
+  //   spyOn(navCtrl, 'push');
+  //   de = fixture.debugElement.query(By.css('ion-buttons button'));
+  //   de.triggerEventHandler('click', null);
+  //   expect(navCtrl.push).toHaveBeenCalledWith(WishlistPage);
+  // });
 });

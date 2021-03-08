@@ -8,6 +8,7 @@ import bodyParser from 'body-parser';
 import {config} from './config/config';
 import {V0_FEED_MODELS} from './controllers/v0/model.index';
 
+const c = config.dev;
 
 (async () => {
   await sequelize.addModels(V0_FEED_MODELS);
@@ -25,7 +26,7 @@ import {V0_FEED_MODELS} from './controllers/v0/model.index';
       'X-Access-Token', 'Authorization',
     ],
     methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-    origin: config.url,
+    origin: c.url,
   }));
 
   app.use('/api/v0/', IndexRouter);
@@ -38,7 +39,7 @@ import {V0_FEED_MODELS} from './controllers/v0/model.index';
 
   // Start the Server
   app.listen( port, () => {
-    console.log( `server running ${config.url}` );
+    console.log( `feed server running ${c.url}` );
     console.log( `press CTRL+C to stop server` );
   } );
 })();

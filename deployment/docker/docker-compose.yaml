@@ -6,13 +6,19 @@ services:
           - 8080:8080
       restart: always
       depends_on:
-        - backend-users
-        - backend-feed
-  backend-users:
+        - udagram-api-users-svc
+        - udagram-api-feed-svc
+  udagram-api-users-svc:
     image: mathson/microservice-udagram-api-users
-  backend-feed:
+    env_file:
+      - env.list
+  udagram-api-feed-svc:
     image: mathson/microservice-udagram-api-feed
+    env_file:
+      - env.list
   frontend:
     image: mathson/microservice-udagram-frontend
     ports:
       - "8100:80"
+    depends_on:
+        - reverseproxy
