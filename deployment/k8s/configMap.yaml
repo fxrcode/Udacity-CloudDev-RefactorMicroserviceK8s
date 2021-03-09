@@ -8,4 +8,4 @@ data:
   AWS_REGION: us-west-1
   POSTGRESS_DATABASE: postgres
   POSTGRESS_HOST: udagramtonydev.ccnq7c8jxvgc.us-west-1.rds.amazonaws.com
-  URL: http://ac882de7f911749a69d370284d490024-2002419506.us-west-1.elb.amazonaws.com:8100
+  URL: http://aef24712d2a544cb0a64b7256f83a3a5-187813066.us-west-1.elb.amazonaws.com:8100
