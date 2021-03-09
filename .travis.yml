@@ -25,7 +25,7 @@ script:
 after_success:
     - echo 'Hello Udacity..3.'
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    # - docker push mathson/microservice-udagram-frontend
-    # - docker push mathson/microservice-udagram-api-feed
-    # - docker push mathson/microservice-udagram-api-users
+    - docker push mathson/microservice-udagram-frontend
+    - docker push mathson/microservice-udagram-api-feed
+    - docker push mathson/microservice-udagram-api-users
     - docker push mathson/microservice-udagram-nginx
