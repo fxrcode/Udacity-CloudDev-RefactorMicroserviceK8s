@@ -6,7 +6,7 @@ metadata:
         part-of: udagram-microservices
 data:
   AWS_MEDIA_BUCKET: udagram-tony-filestore-dev
-  AWS_PROFILE: default
+  AWS_PROFILE: Udagram-dev
   AWS_REGION: us-west-1
   POSTGRESS_DATABASE: postgres
   POSTGRESS_HOST: udagramtonydev.ccnq7c8jxvgc.us-west-1.rds.amazonaws.com
