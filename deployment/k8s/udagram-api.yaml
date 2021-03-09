@@ -37,7 +37,7 @@ spec:
                       httpGet:
                           path: /
                           port: 8080
-                      initialDelaySeconds: 5
+                      initialDelaySeconds: 15
                       periodSeconds: 5
                       successThreshold: 1
                   resources:
@@ -47,8 +47,8 @@ spec:
                       limits:
                           memory: "1024Mi"
                           cpu: "500m"
-                #   ports:
-                #       - containerPort: 8080
+                  ports:
+                      - containerPort: 8080
                   envFrom:
                       - configMapRef:
                             name: config-envs
@@ -104,7 +104,7 @@ spec:
                       httpGet:
                           path: /
                           port: 8080
-                      initialDelaySeconds: 5
+                      initialDelaySeconds: 15
                       periodSeconds: 5
                       successThreshold: 1
                   resources:
@@ -114,17 +114,63 @@ spec:
                       limits:
                           memory: "1024Mi"
                           cpu: "500m"
-                #   ports:
-                #       - containerPort: 8080
+                  ports:
+                      - containerPort: 8080
                   envFrom:
                       - configMapRef:
                             name: config-envs
                       - secretRef:
                             name: env-secret
+                #   env:
+                #      - name: URL
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: URL
+                #      - name: AWS_MEDIA_BUCKET
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: AWS_MEDIA_BUCKET
+                #      - name: AWS_PROFILE
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: AWS_PROFILE
+                #      - name: AWS_REGION
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: AWS_REGION
+                #      - name: JWT_SECRET
+                #        valueFrom:
+                #          secretKeyRef:
+                #            name: env-secret
+                #            key: JWT_SECRET
+                #      - name: POSTGRESS_DATABASE
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: POSTGRESS_DATABASE
+                #      - name: POSTGRESS_HOST
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: POSTGRESS_HOST
+                #      - name: POSTGRESS_PASSWORD
+                #        valueFrom:
+                #          secretKeyRef:
+                #            name: env-secret
+                #            key: POSTGRESS_PASSWORD
+                #      - name: POSTGRESS_USERNAME
+                #        valueFrom:
+                #          secretKeyRef:
+                #            name: env-secret
+                #            key: POSTGRESS_USERNAME
                   volumeMounts:
-                      - name: aws-secret
-                        mountPath: "/root/.aws/"
-                        readOnly: true
+                    - name: aws-secret
+                      mountPath: "/root/.aws/"
+                      readOnly: true
             restartPolicy: Always
             volumes:
                 - name: aws-secret
