@@ -1,0 +1,26 @@
+version: "3"
+services:
+  reverseproxy:
+      image: mathson/microservice-udagram-nginx
+      ports:
+          - 8080:8080
+      restart: always
+      depends_on:
+        - udagram-api-users
+        - udagram-api-feed
+  udagram-api-users:
+    image: mathson/microservice-udagram-api-users
+    env_file:
+      - env.list
+  udagram-api-feed:
+    image: mathson/microservice-udagram-api-feed
+    env_file:
+      - env.list
+    volumes:
+      - $HOME/.aws:/root/.aws
+  frontend:
+    image: mathson/microservice-udagram-frontend
+    ports:
+      - "8100:80"
+    depends_on:
+        - reverseproxy

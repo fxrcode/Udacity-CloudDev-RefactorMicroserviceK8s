@@ -1,0 +1,178 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: udagram-api-users
+    labels:
+        service: udagram-api-users
+spec:
+    selector:
+        service: udagram-api-users
+    ports:
+        - protocol: TCP
+          port: 8080
+          targetPort: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: udagram-api-users
+    labels:
+        service: udagram-api-users
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            service: udagram-api-users
+    template:
+        metadata:
+            labels:
+                service: udagram-api-users
+        spec:
+            containers:
+                - name: udagram-api-users
+                  image: mathson/microservice-udagram-api-users
+                  imagePullPolicy: Always
+                  readinessProbe:
+                      httpGet:
+                          path: /
+                          port: 8080
+                      initialDelaySeconds: 15
+                      periodSeconds: 5
+                      successThreshold: 1
+                  resources:
+                      requests:
+                          memory: "64Mi"
+                          cpu: "250m"
+                      limits:
+                          memory: "1024Mi"
+                          cpu: "500m"
+                  ports:
+                      - containerPort: 8080
+                  envFrom:
+                      - configMapRef:
+                            name: config-envs
+                      - secretRef:
+                            name: env-secret
+                  volumeMounts:
+                      - name: aws-secret
+                        mountPath: "/root/.aws/"
+                        readOnly: true
+            restartPolicy: Always
+            volumes:
+                - name: aws-secret
+                  secret:
+                      secretName: aws-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: udagram-api-feed
+    labels:
+        service: udagram-api-feed
+spec:
+    selector:
+        service: udagram-api-feed
+    ports:
+        - protocol: TCP
+          port: 8080
+          targetPort: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: udagram-api-feed
+    labels:
+        service: udagram-api-feed
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            service: udagram-api-feed
+    template:
+        metadata:
+            labels:
+                service: udagram-api-feed
+        spec:
+            containers:
+                - name: udagram-api-feed
+                  image: mathson/microservice-udagram-api-feed
+                  imagePullPolicy: Always
+                  readinessProbe:
+                      httpGet:
+                          path: /
+                          port: 8080
+                      initialDelaySeconds: 15
+                      periodSeconds: 5
+                      successThreshold: 1
+                  resources:
+                      requests:
+                          memory: "64Mi"
+                          cpu: "250m"
+                      limits:
+                          memory: "1024Mi"
+                          cpu: "500m"
+                  ports:
+                      - containerPort: 8080
+                  envFrom:
+                      - configMapRef:
+                            name: config-envs
+                      - secretRef:
+                            name: env-secret
+                #   env:
+                #      - name: URL
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: URL
+                #      - name: AWS_MEDIA_BUCKET
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: AWS_MEDIA_BUCKET
+                #      - name: AWS_PROFILE
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: AWS_PROFILE
+                #      - name: AWS_REGION
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: AWS_REGION
+                #      - name: JWT_SECRET
+                #        valueFrom:
+                #          secretKeyRef:
+                #            name: env-secret
+                #            key: JWT_SECRET
+                #      - name: POSTGRESS_DATABASE
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: POSTGRESS_DATABASE
+                #      - name: POSTGRESS_HOST
+                #        valueFrom:
+                #          configMapKeyRef:
+                #            name: config-envs
+                #            key: POSTGRESS_HOST
+                #      - name: POSTGRESS_PASSWORD
+                #        valueFrom:
+                #          secretKeyRef:
+                #            name: env-secret
+                #            key: POSTGRESS_PASSWORD
+                #      - name: POSTGRESS_USERNAME
+                #        valueFrom:
+                #          secretKeyRef:
+                #            name: env-secret
+                #            key: POSTGRESS_USERNAME
+                  volumeMounts:
+                    - name: aws-secret
+                      mountPath: "/root/.aws/"
+                      readOnly: true
+            restartPolicy: Always
+            volumes:
+                - name: aws-secret
+                  secret:
+                      secretName: aws-secret

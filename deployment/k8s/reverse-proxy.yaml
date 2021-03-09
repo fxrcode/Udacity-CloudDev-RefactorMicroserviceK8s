@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: reverse-proxy-svc
+    labels:
+        service: reverse-proxy
+spec:
+    selector:
+        service: reverse-proxy
+    ports:
+        - protocol: TCP
+          port: 8080
+          targetPort: 8080
+    # type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: reverse-proxy
+    labels:
+        service: reverse-proxy
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            service: reverse-proxy
+    template:
+        metadata:
+            labels:
+                service: reverse-proxy
+        spec:
+            containers:
+                - name: reverse-proxy
+                  image: mathson/microservice-udagram-nginx
+                  imagePullPolicy: Always
+                  ports:
+                      - containerPort: 8080
+                  resources:
+                      requests:
+                          cpu: 200m
