@@ -39,16 +39,31 @@ spec:
                 - name: api-users
                   image: mathson/microservice-udagram-api-users
                   imagePullPolicy: Always
-                  ports:
-                      - containerPort: 8080
+                  readinessProbe:
+                      httpGet:
+                          path: /
+                          port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 5
+                      successThreshold: 1
                   resources:
                       requests:
-                          cpu: 200m
+                          memory: "64Mi"
+                          cpu: "250m"
+                      limits:
+                          memory: "1024Mi"
+                          cpu: "500m"
+                  #   ports:
+                  #       - containerPort: 8080
                   envFrom:
                       - configMapRef:
                             name: config-envs
                       - secretRef:
-                            name: secrets
+                            name: env-secret
+            volumeMounts:
+                - name: aws-secret
+                  mountPath: "/root/.aws/"
+                  readOnly: true
 
 ---
 apiVersion: v1
@@ -92,16 +107,31 @@ spec:
                 - name: api-feed
                   image: mathson/microservice-udagram-api-feed
                   imagePullPolicy: Always
-                  ports:
-                      - containerPort: 8080
+                  readinessProbe:
+                      httpGet:
+                          path: /
+                          port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 5
+                      successThreshold: 1
                   resources:
                       requests:
-                          cpu: 200m
+                          memory: "64Mi"
+                          cpu: "250m"
+                      limits:
+                          memory: "1024Mi"
+                          cpu: "500m"
+                  #   ports:
+                  #       - containerPort: 8080
                   envFrom:
                       - configMapRef:
                             name: config-envs
                       - secretRef:
-                            name: secrets
+                            name: env-secret
+                #   volumeMounts:
+                #       - name: aws-secret
+                #         mountPath: "/root/.aws/"
+                #         readOnly: true
 
 ---
 apiVersion: v1
