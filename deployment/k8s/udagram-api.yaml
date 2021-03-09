@@ -42,11 +42,7 @@ spec:
                       successThreshold: 1
                   resources:
                       requests:
-                          memory: "64Mi"
                           cpu: "250m"
-                      limits:
-                          memory: "1024Mi"
-                          cpu: "500m"
                   ports:
                       - containerPort: 8080
                   envFrom:
@@ -109,11 +105,7 @@ spec:
                       successThreshold: 1
                   resources:
                       requests:
-                          memory: "64Mi"
                           cpu: "250m"
-                      limits:
-                          memory: "1024Mi"
-                          cpu: "500m"
                   ports:
                       - containerPort: 8080
                   envFrom:
