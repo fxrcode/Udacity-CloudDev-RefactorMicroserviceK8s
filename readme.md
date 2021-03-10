@@ -11,6 +11,7 @@
   * config.url is used by feed & users to CORS requests from frontend. Therefore it need to updated dynamically after frontend-svc is up, and we get frontend's LoadBalancer Ingress. Then we can re-apply the configMap.yaml, and use kubectl delete pod to have k8s re-schedule a new feed/users pod to consume the configmap's new config.url.
 * Really appreciate Emil M's help in knowledge forum!
 
+
 ## eks
 * eksctl didn't cleanup all resources last time: eks-cluster-demo stack (cloudformation), and eksctl-Demo-cluster/NATGateway (NAT),, etc.
     * I tried to delete the stack, but it failed in deleting: `The vpc 'vpc-07991844397cbdef0' has dependencies and cannot be deleted. (Service: AmazonEC2; Status Code: 400; Error Code: DependencyViolation; Request ID: d6566527-86bc-4000-baac-d98ada442ffe; Proxy: null)`
